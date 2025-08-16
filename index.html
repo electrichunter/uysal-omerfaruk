@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ömer Faruk Uysal | Full Stack Geliştirici</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Reset and Base Styles */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            line-height: 1.5;
+            -webkit-text-size-adjust: 100%;
+            -moz-tab-size: 4;
+            tab-size: 4;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        
+        /* Language Switcher Styles */
+        .language-switcher {
+            position: absolute;
+            top: 1rem; /* Moved higher */
+            right: 1rem; /* Moved closer to edge */
+            display: flex;
+            gap: 0.5rem;
+            z-index: 10;
+        }
+        .lang-btn {
+            background-color: rgba(249, 250, 251, 0.7); /* Semi-transparent background */
+            border: 1px solid transparent;
+            border-radius: 9999px;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+            /* Glassmorphism effect for a modern look */
+            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .lang-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        .lang-btn.active {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+            background-color: #fff;
+        }
+        .lang-btn img {
+            width: 24px;
+            height: 24px;
+            display: block;
+        }
+
+
+        /* Main Container */
+        .container {
+            width: 100%;
+            max-width: 72rem;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 1rem;
+        }
+
+        /* Card Layout */
+        .card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Sidebar (Left Column) */
+        .sidebar {
+            background-color: #1f2937;
+            color: #ffffff;
+            padding: 2rem;
+        }
+        
+        .sidebar-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-pic {
+            width: 8rem;
+            height: 8rem;
+            object-fit: cover;
+            border-radius: 9999px;
+            margin-bottom: 1.5rem;
+            border: 4px solid #6b7280;
+        }
+
+        .sidebar-section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            border-bottom: 2px solid #4b5563;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-list {
+            list-style: none;
+            width: 100%;
+        }
+
+        .contact-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        
+        .contact-list a {
+            color: #ffffff;
+            text-decoration: none;
+            word-break: break-all;
+            transition: color 0.2s;
+        }
+        
+        .contact-list a:hover {
+            color: #93c5fd;
+        }
+
+        .contact-list i {
+            width: 1.5rem;
+            color: #93c5fd;
+        }
+        
+        .skills-container {
+            margin-top: 2rem;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            color: #ffffff;
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+        }
+        .skill-tag.primary { background-color: #3b82f6; }
+        .skill-tag.secondary { background-color: #4b5563; }
+
+
+        /* Main Content (Right Column) */
+        .main-content {
+            padding: 2rem;
+            width: 100%;
+            background-color: #f9fafb;
+        }
+
+        header {
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #111827;
+        }
+
+        header p {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #2563eb;
+            margin-top: 0.25rem;
+        }
+        
+        section {
+            margin-top: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.875rem;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: #111827;
+        }
+        
+        .summary-text {
+            color: #374151;
+            line-height: 1.625;
+        }
+        .experience-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .job-title {
+            font-size: 1.25rem;
+            color: #1f2937;
+            font-weight: 600;
+        }
+        .company-name {
+            color: #4b5563;
+        }
+        
+        .description-list {
+            list-style: none;
+            margin-top: 0.5rem;
+            padding-left: 1.25rem;
+        }
+        
+        .list-item {
+             color: #374151;
+             margin-bottom: 0.25rem;
+        }
+
+        .list-item::before {
+            content: '•';
+            color: #3b82f6;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        
+        .certifications-grid {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 1rem 1.5rem;
+        }
+        
+        .certification-item {
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .certification-item i {
+            color: #3b82f6;
+            margin-top: 0.25rem;
+            margin-right: 0.75rem;
+        }
+        
+        .certification-item h4 {
+            font-weight: 600;
+        }
+        
+        .certification-item p {
+            font-size: 0.875rem;
+            color: #4b5563;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 640px) {
+            .container {
+                padding: 1.5rem;
+            }
+            .certifications-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 768px) {
+            .card {
+                flex-direction: row;
+            }
+            .sidebar {
+                width: 33.333333%;
+            }
+            .sidebar-content {
+                align-items: flex-start;
+            }
+            .main-content {
+                width: 66.666667%;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .container {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="card">
+            
+            <div class="language-switcher">
+                <button class="lang-btn active" onclick="changeLanguage('tr')"><img src="https://flagcdn.com/w40/tr.png" alt="Turkish Flag"></button>
+                <button class="lang-btn" onclick="changeLanguage('en')"><img src="https://flagcdn.com/w40/gb.png" alt="British Flag"></button>
+                <button class="lang-btn" onclick="changeLanguage('de')"><img src="https://flagcdn.com/w40/de.png" alt="German Flag"></button>
+            </div>
+
+            <!-- Left Column / Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-content">
+                    <img class="profile-pic" src="./SAH.jpg" alt="Ömer Faruk Uysal Profil Fotoğrafı">
+                    
+                    <div style="width: 100%;">
+                        <h2 class="sidebar-section-title" id="contact-title">İLETİŞİM</h2>
+                        <ul class="contact-list">
+                            <li>
+                                <i class="fas fa-phone fa-fw"></i>
+                                <a href="tel:5528035732">552 803 5732</a>
+                            </li>
+                            <li>
+                                <i class="fas fa-envelope fa-fw"></i>
+                                <a href="mailto:ouysal155@gmail.com">ouysal155@gmail.com</a>
+                            </li>
+                            <li>
+                                <i class="fas fa-map-marker-alt fa-fw"></i>
+                                <span id="address">Türkiye, Ankara, Çankaya</span>
+                            </li>
+                            <li>
+                                <i class="fab fa-linkedin fa-fw"></i>
+                                <a href="https://www.linkedin.com/in/omer-farukuysal" target="_blank">linkedin.com/in/omer-farukuysal</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="skills-container">
+                        <h2 class="sidebar-section-title" style="width: 100%;" id="skills-title">YETENEKLER</h2>
+                        <span class="skill-tag primary">React Native</span>
+                        <span class="skill-tag primary">ASP.NET Core</span>
+                        <span class="skill-tag primary">Python</span>
+                        <span class="skill-tag secondary">Angular</span>
+                        <span class="skill-tag secondary">Docker</span>
+                        <span class="skill-tag secondary">Linux</span>
+                        <span class="skill-tag secondary" id="skill-cyber">Siber Güvenlik</span>
+                        <span class="skill-tag secondary">Git & GitHub</span>
+                        <span class="skill-tag secondary">SQL</span>
+                        <span class="skill-tag secondary">Apache Spark</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Right Column / Main Content -->
+            <main class="main-content">
+                <header>
+                    <h1>Ömer Faruk Uysal</h1>
+                    <p id="job-main-title">Full Stack Geliştirici</p>
+                </header>
+
+                <section>
+                    <h2 class="section-title" id="summary-title">PROFESYONEL ÖZET</h2>
+                    <p class="summary-text" id="summary-text">
+                        React Native, ASP.NET Core ve Python gibi modern teknolojilerle uçtan uca çözümler üreten bir Full Stack Geliştiriciyim. Docker ve Linux ortamlarındaki yetkinliğimi, siber güvenlik bilgimle birleştirerek güvenli ve ölçeklenebilir uygulamalar geliştiriyorum. Kullanıcı deneyimini merkeze alan, araştırmacı ve takım çalışmasına yatkın bir yaklaşımla projelere değer katmayı hedefliyorum.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 class="section-title" id="experience-title">İŞ DENEYİMİ</h2>
+                    <div>
+                        <div class="experience-item">
+                            <h3 class="job-title" id="job1-title">Gönüllü Full Stack & Mobil Geliştirici</h3>
+                            <p class="company-name">Kap Gitsin</p>
+                            <ul class="description-list">
+                                <li class="list-item" id="job1-desc1">React Native ile mobil kullanıcı arayüzlerini geliştirerek kullanıcı deneyimini optimize etmekteyim.</li>
+                                <li class="list-item" id="job1-desc2">Takım içi kod inceleme, test ve devops süreçlerine destek vermekteyim.</li>
+                            </ul>
+                        </div>
+                        <div class="experience-item">
+                            <h3 class="job-title" id="job2-title">Yazılım Geliştirici Stajyeri</h3>
+                            <p class="company-name" id="job2-company">Gazi Üniversitesi Bilgi İşlem Daire Başkanlığı</p>
+                            <ul class="description-list">
+                                <li class="list-item" id="job2-desc1">Angular ve ASP.NET Core ile full stack web geliştirme projelerinde görev aldım.</li>
+                                <li class="list-item" id="job2-desc2">Apache Spark kullanarak büyük veri analizi ve işleme konularında tecrübe edindim.</li>
+                                <li class="list-item" id="job2-desc3">Backend geliştirme görevlerinde yer alarak proje süreçlerinin ilerlemesine katkı sundum.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="section-title" id="club-title">KULÜP DENEYİMİ</h2>
+                    <div class="experience-item">
+                        <h3 class="job-title" id="club1-title">Bilişim Bölüm Başkanı</h3>
+                        <p class="company-name">Knownloop Teknoloji Kulübü</p>
+                        <ul class="description-list">
+                            <li class="list-item" id="club1-desc1">Teknoloji odaklı blog içerikleri ürettim ve platformun içerik yönetimini sağladım.</li>
+                            <li class="list-item" id="club1-desc2">Ekip organizasyonu ve yazılım geliştirme konularında ekibe liderlik ettim.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="section-title" id="certs-title">SERTİFİKASYONLAR</h2>
+                    <div class="certifications-grid">
+                        <div class="certification-item">
+                            <i class="fas fa-award"></i>
+                            <div>
+                                <h4>CyberOps Associate, Cisco</h4>
+                                <p id="cert-date1">Mart 2024</p>
+                            </div>
+                        </div>
+                        <div class="certification-item">
+                            <i class="fas fa-award"></i>
+                            <div>
+                                <h4 id="cert2-title">CCNAv7: Ağlara Giriş, Cisco</h4>
+                                <p id="cert-date2">Ocak 2024</p>
+                            </div>
+                        </div>
+                        <div class="certification-item">
+                            <i class="fas fa-award"></i>
+                            <div>
+                                <h4 id="cert3-title">NDG Linux Temelleri, Cisco</h4>
+                                <p id="cert-date3">Aralık 2023</p>
+                            </div>
+                        </div>
+                         <div class="certification-item">
+                            <i class="fas fa-award"></i>
+                            <div>
+                                <h4 id="cert4-title">Makine Öğrenimi, Akbank</h4>
+                                <p id="cert-date4">Mayıs 2024</p>
+                            </div>
+                        </div>
+                        <div class="certification-item">
+                            <i class="fas fa-award"></i>
+                            <div>
+                                <h4 id="cert5-title">Docker Temelleri, BTK Akademi</h4>
+                            </div>
+                        </div>
+                        <div class="certification-item">
+                            <i class="fas fa-award"></i>
+                            <div>
+                                <h4 id="cert6-title">Versiyon Kontrolleri: Git ve GitHub, BTK Akademi</h4>
+                            </div>
+                        </div>
+                        <div class="certification-item">
+                            <i class="fas fa-award"></i>
+                            <div>
+                                <h4 id="cert7-title">Sıfırdan İleri Seviye Python Programlama (BTK Akademi)</h4>
+                            </div>
+                        </div>
+                        <div class="certification-item">
+                            <i class="fas fa-award"></i>
+                            <div>
+                                <h4 id="cert8-title">Uygulamalarla SQL Öğreniyorum (BTK Akademi)</h4>
+                            </div>
+                        </div>
+                         <div class="certification-item">
+                            <i class="fas fa-award"></i>
+                            <div>
+                                <h4>PHP (BTK AKADEMİ)</h4>
+                            </div>
+                        </div>
+                        <div class="certification-item">
+                            <i class="fas fa-award"></i>
+                            <div>
+                                <h4 id="cert10-title">Web Sitesi Kullanılabilirliği (BTK AKADEMİ)</h4>
+                            </div>
+                        </div>
+                        <div class="certification-item">
+                            <i class="fas fa-award"></i>
+                            <div>
+                                <h4 id="cert11-title">Tasarım 101, Akbank</h4>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+    
+    <script>
+        const translations = {
+            tr: {
+                "contact-title": "İLETİŞİM",
+                "address": "Türkiye, Ankara, Çankaya",
+                "skills-title": "YETENEKLER",
+                "skill-cyber": "Siber Güvenlik",
+                "job-main-title": "Full Stack Geliştirici",
+                "summary-title": "PROFESYONEL ÖZET",
+                "summary-text": "React Native, ASP.NET Core ve Python gibi modern teknolojilerle uçtan uca çözümler üreten bir Full Stack Geliştiriciyim. Docker ve Linux ortamlarındaki yetkinliğimi, siber güvenlik bilgimle birleştirerek güvenli ve ölçeklenebilir uygulamalar geliştiriyorum. Kullanıcı deneyimini merkeze alan, araştırmacı ve takım çalışmasına yatkın bir yaklaşımla projelere değer katmayı hedefliyorum.",
+                "experience-title": "İŞ DENEYİMİ",
+                "job1-title": "Gönüllü Full Stack & Mobil Geliştirici",
+                "job1-desc1": "React Native ile mobil kullanıcı arayüzlerini geliştirerek kullanıcı deneyimini optimize etmekteyim.",
+                "job1-desc2": "Takım içi kod inceleme, test ve devops süreçlerine destek vermekteyim.",
+                "job2-title": "Yazılım Geliştirici Stajyeri",
+                "job2-company": "Gazi Üniversitesi Bilgi İşlem Daire Başkanlığı",
+                "job2-desc1": "Angular ve ASP.NET Core ile full stack web geliştirme projelerinde görev aldım.",
+                "job2-desc2": "Apache Spark kullanarak büyük veri analizi ve işleme konularında tecrübe edindim.",
+                "job2-desc3": "Backend geliştirme görevlerinde yer alarak proje süreçlerinin ilerlemesine katkı sundum.",
+                "club-title": "KULÜP DENEYİMİ",
+                "club1-title": "Bilişim Bölüm Başkanı",
+                "club1-desc1": "Teknoloji odaklı blog içerikleri ürettim ve platformun içerik yönetimini sağladım.",
+                "club1-desc2": "Ekip organizasyonu ve yazılım geliştirme konularında ekibe liderlik ettim.",
+                "certs-title": "SERTİFİKASYONLAR",
+                "cert-date1": "Mart 2024",
+                "cert2-title": "CCNAv7: Ağlara Giriş, Cisco",
+                "cert-date2": "Ocak 2024",
+                "cert3-title": "NDG Linux Temelleri, Cisco",
+                "cert-date3": "Aralık 2023",
+                "cert4-title": "Makine Öğrenimi, Akbank",
+                "cert-date4": "Mayıs 2024",
+                "cert5-title": "Docker Temelleri, BTK Akademi",
+                "cert6-title": "Versiyon Kontrolleri: Git ve GitHub, BTK Akademi",
+                "cert7-title": "Sıfırdan İleri Seviye Python Programlama (BTK Akademi)",
+                "cert8-title": "Uygulamalarla SQL Öğreniyorum (BTK Akademi)",
+                "cert10-title": "Web Sitesi Kullanılabilirliği (BTK AKADEMİ)",
+                "cert11-title": "Tasarım 101, Akbank"
+            },
+            en: {
+                "contact-title": "CONTACT",
+                "address": "Çankaya, Ankara, Türkiye",
+                "skills-title": "SKILLS",
+                "skill-cyber": "Cyber Security",
+                "job-main-title": "Full Stack Developer",
+                "summary-title": "PROFESSIONAL SUMMARY",
+                "summary-text": "I am a Full Stack Developer creating end-to-end solutions with modern technologies like React Native, ASP.NET Core, and Python. I combine my proficiency in Docker and Linux environments with my cybersecurity knowledge to develop secure and scalable applications. I aim to add value to projects with a user-centric, research-oriented, and team-oriented approach.",
+                "experience-title": "WORK EXPERIENCE",
+                "job1-title": "Volunteer Full Stack & Mobile Developer",
+                "job1-desc1": "I optimize the user experience by developing mobile user interfaces with React Native.",
+                "job1-desc2": "I support intra-team code review, testing, and DevOps processes.",
+                "job2-title": "Software Developer Intern",
+                "job2-company": "Gazi University IT Department",
+                "job2-desc1": "I took part in full-stack web development projects with Angular and ASP.NET Core.",
+                "job2-desc2": "I gained experience in big data analysis and processing using Apache Spark.",
+                "job2-desc3": "I contributed to the progress of project processes by taking part in backend development tasks.",
+                "club-title": "CLUB EXPERIENCE",
+                "club1-title": "Head of IT Department",
+                "club1-desc1": "I produced technology-oriented blog content and managed the platform's content.",
+                "club1-desc2": "I led the team in team organization and software development.",
+                "certs-title": "CERTIFICATIONS",
+                "cert-date1": "March 2024",
+                "cert2-title": "CCNAv7: Introduction to Networks, Cisco",
+                "cert-date2": "January 2024",
+                "cert3-title": "NDG Linux Essentials, Cisco",
+                "cert-date3": "December 2023",
+                "cert4-title": "Machine Learning, Akbank",
+                "cert-date4": "May 2024",
+                "cert5-title": "Docker Essentials, BTK Academy",
+                "cert6-title": "Version Control: Git and GitHub, BTK Academy",
+                "cert7-title": "Python Programming from Scratch to Advanced (BTK Academy)",
+                "cert8-title": "Learning SQL with Applications (BTK Academy)",
+                "cert10-title": "Website Usability (BTK ACADEMY)",
+                "cert11-title": "Design 101, Akbank"
+            },
+            de: {
+                "contact-title": "KONTAKT",
+                "address": "Çankaya, Ankara, Türkei",
+                "skills-title": "FÄHIGKEITEN",
+                "skill-cyber": "Cyber-Sicherheit",
+                "job-main-title": "Full-Stack-Entwickler",
+                "summary-title": "BERUFLICHE ZUSAMMENFASSUNG",
+                "summary-text": "Ich bin ein Full-Stack-Entwickler, der End-to-End-Lösungen mit modernen Technologien wie React Native, ASP.NET Core und Python erstellt. Ich kombiniere meine Kenntnisse in Docker- und Linux-Umgebungen mit meinem Wissen über Cybersicherheit, um sichere und skalierbare Anwendungen zu entwickeln. Mein Ziel ist es, Projekten durch einen benutzerzentrierten, forschungsorientierten und teamorientierten Ansatz einen Mehrwert zu verleihen.",
+                "experience-title": "BERUFSERFAHRUNG",
+                "job1-title": "Freiwilliger Full-Stack- & Mobil-Entwickler",
+                "job1-desc1": "Ich optimiere die Benutzererfahrung durch die Entwicklung mobiler Benutzeroberflächen mit React Native.",
+                "job1-desc2": "Ich unterstütze teaminterne Code-Reviews, Tests und DevOps-Prozesse.",
+                "job2-title": "Praktikant Softwareentwicklung",
+                "job2-company": "IT-Abteilung der Gazi-Universität",
+                "job2-desc1": "Ich habe an Full-Stack-Webentwicklungsprojekten mit Angular und ASP.NET Core teilgenommen.",
+                "job2-desc2": "Ich habe Erfahrung in der Big-Data-Analyse und -Verarbeitung mit Apache Spark gesammelt.",
+                "job2-desc3": "Ich habe zum Fortschritt der Projektprozesse beigetragen, indem ich an Backend-Entwicklungsaufgaben teilgenommen habe.",
+                "club-title": "CLUB-ERFAHRUNG",
+                "club1-title": "Leiter der IT-Abteilung",
+                "club1-desc1": "Ich habe technologieorientierte Blog-Inhalte erstellt und den Inhalt der Plattform verwaltet.",
+                "club1-desc2": "Ich habe das Team in den Bereichen Teamorganisation und Softwareentwicklung geleitet.",
+                "certs-title": "ZERTIFIZIERUNGEN",
+                "cert-date1": "März 2024",
+                "cert2-title": "CCNAv7: Einführung in Netzwerke, Cisco",
+                "cert-date2": "Januar 2024",
+                "cert3-title": "NDG Linux Grundlagen, Cisco",
+                "cert-date3": "Dezember 2023",
+                "cert4-title": "Maschinelles Lernen, Akbank",
+                "cert-date4": "Mai 2024",
+                "cert5-title": "Docker-Grundlagen, BTK Akademie",
+                "cert6-title": "Versionskontrolle: Git und GitHub, BTK Akademie",
+                "cert7-title": "Python-Programmierung von Grund auf für Fortgeschrittene (BTK Akademie)",
+                "cert8-title": "SQL lernen mit Anwendungen (BTK Akademie)",
+                "cert10-title": "Website-Benutzerfreundlichkeit (BTK AKADEMIE)",
+                "cert11-title": "Design 101, Akbank"
+            }
+        };
+
+        function changeLanguage(lang) {
+            // Set html lang attribute
+            document.documentElement.lang = lang;
+            
+            // Update all elements with an id
+            for (const id in translations[lang]) {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.innerHTML = translations[lang][id];
+                }
+            }
+            
+            // Update active button style
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.lang-btn[onclick="changeLanguage('${lang}')"]`).classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
